@@ -189,5 +189,37 @@ async function addAnEmployee() {
     );
   }
 
+  async function updateRole() {
+    const employeeRoles = await db.query('SELECT * FROM employee, role');
+  
+    const answers = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'employee',
+        message: 'which employee\'s role do you want to update?',
+        choices: [...new Set(employeeRoles.map((employee) => employee.last_name))],
+      },
+      {
+        type: 'list',
+        name: 'role',
+        message: 'Select new role',
+        choices: [...new Set(employeeRoles.map((role) => role.title))],
+      },
+    ]);
+  
+    const selectedEmployee = employeeRoles.find((employee) => employee.last_name === answers.employee);
+    const selectedRole = employeeRoles.find((role) => role.title === answers.role);
+  
+    db.query(
+      'UPDATE employee SET ? WHERE ?',
+      [{ role_id: selectedRole.id }, { last_name: selectedEmployee.last_name }],
+      (err, result) => {
+      if (err) throw err;
+      console.log(`Updated ${answers.employee}'s role to ${answers.role}.`);
+      employeeTracker();
+      }
+    );
+  }
+
 
   
