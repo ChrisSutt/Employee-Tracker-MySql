@@ -15,7 +15,7 @@ VALUES
 ('General Manager', 85000, 4);
 
 INSERT INTO employee
-(firstName, lastName, roleId, managerId)
+(first_name, last_name, role_id, manager_id)
 VALUES
 ('Bill', 'Nye', 4, 5),
 ('Charles', 'Smith', 3, 4),

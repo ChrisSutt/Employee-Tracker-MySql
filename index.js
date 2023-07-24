@@ -82,15 +82,15 @@ function viewAllEmployees() {
 
 async function addADepartment() {
     const answer = await inquirer.prompt([
-      {
+    {
         type: 'input',
         name: 'department',
-        message: 'What is the name of the department?',
+        message: 'Input the name of the department',
         validate: (departmentInput) => {
-          return departmentInput ? true : 'Please Add A Department!';
+        return departmentInput ? true : 'Add Department';
         },
-      },
-    ]);
+    },
+]);
   
     db.query('INSERT INTO department (name) VALUES (?)', [answer.department], (err, result) => {
       if (err) throw err;
@@ -99,6 +99,45 @@ async function addADepartment() {
     });
   }
 
-  async function addARole() {
-    
+
+async function addARole() {
+    const departments = await db.query('SELECT * FROM department');
+  
+    const answers = await inquirer.prompt([
+    {
+        type: 'input',
+        name: 'role',
+        message: 'Role Name',
+        validate: (roleInput) => {
+        return roleInput ? true : 'Add Role';
+        },
+    },
+    {
+        type: 'input',
+        name: 'salary',
+        message: 'Role Salary',
+        validate: (salaryInput) => {
+        return salaryInput ? true : 'Please Add A Salary!';
+        },
+    },
+    {
+        type: 'list',
+        name: 'department',
+        message: 'Roles Department',
+        choices: departments.map((department) => department.name),
+    },
+]);
+  
+    const selectedDepartment = departments.find((department) => department.name === answers.department);
+  
+    db.query('INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)',
+      [answers.role, answers.salary, selectedDepartment.id],
+      (err, result) => {
+      if (err) throw err;
+      console.log(`Added ${answers.role} to the database.`);
+      employeeTracker();
+      }
+    );
   }
+
+  
