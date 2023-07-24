@@ -140,4 +140,54 @@ async function addARole() {
     );
   }
 
+async function addAnEmployee() {
+    const rolesAndEmployees = await db.query('SELECT * FROM employee, role');
+  
+    const answers = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'first_name',
+        message: 'Employee\'s first name',
+        validate: (firstNameInput) => {
+          return firstNameInput ? true : 'Add a first name';
+        },
+      },
+      {
+        type: 'input',
+        name: 'last_name',
+        message: 'Employee\'s last name',
+        validate: (lastNameInput) => {
+          return lastNameInput ? true : 'Add a last name';
+        },
+      },
+      {
+        type: 'list',
+        name: 'role',
+        message: 'Employee\'s role',
+        choices: [...new Set(rolesAndEmployees.map((role) => role.title))],
+      },
+      {
+        type: 'input',
+        name: 'manager',
+        message: 'Employee\'s manager',
+        validate: (managerInput) => {
+          return managerInput ? true : 'Add a manger';
+        },
+      },
+    ]);
+  
+    const selectedRole = rolesAndEmployees.find((role) => role.title === answers.role);
+  
+    db.query(
+      'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)',
+      [answers.firstName, answers.lastName, selectedRole.id, answers.manager],
+      (err, result) => {
+      if (err) throw err;
+      console.log(`Added ${answers.firstName} ${answers.lastName} to the database.`);
+      employeeTracker();
+      }
+    );
+  }
+
+
   
