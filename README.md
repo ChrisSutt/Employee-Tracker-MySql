@@ -34,8 +34,9 @@ by typing $node index.js in your terminal. You can choose from the below options
 * 'Add a role',
 * 'Add an employee',
 * 'Update employee role'
+* 'Quit'
 
-[Watch the video](https://clipchamp.com/watch/h5O1qlaWiJ4)
+[Watch the video](https://clipchamp.com/watch/t3QNB92arQ4)
 
 ##Screenshot
 
@@ -50,7 +51,7 @@ Email me for contributions
 
 ## Tests
 
-* npm test
+NA
 
 
 ## License
