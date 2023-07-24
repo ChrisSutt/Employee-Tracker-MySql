@@ -80,4 +80,25 @@ function viewAllEmployees() {
 }
 
 
+async function addADepartment() {
+    const answer = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'department',
+        message: 'What is the name of the department?',
+        validate: (departmentInput) => {
+          return departmentInput ? true : 'Please Add A Department!';
+        },
+      },
+    ]);
+  
+    db.query('INSERT INTO department (name) VALUES (?)', [answer.department], (err, result) => {
+      if (err) throw err;
+      console.log(`Added ${answer.department} to the database.`);
+      employeeTracker();
+    });
+  }
+
+  async function addARole() {
     
+  }
