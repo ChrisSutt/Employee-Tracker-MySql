@@ -1,6 +1,13 @@
 const inquirer = require('inquirer');
 const db = require('./db/connect');
 
+// Start server after DB connection
+db.connect((err) => {
+    if (err) throw err;
+    console.log('\x1b[36mEmployee Tracking Database!\x1b[0m');
+    console.log('=============================');
+    employeeTracker();
+  });
 
 async function employeeTracker() {
     const answers = await inquirer.prompt([
