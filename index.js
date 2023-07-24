@@ -51,3 +51,33 @@ async function employeeTracker() {
             employeeTracker();
         }
 }
+
+function viewAllDepartments() {
+    db.query('SELECT * FROM department', (err, result) => {
+        if (err) throw err;
+        console.log('Viewing Departments');
+        console.table(result);
+        employeeTracker();
+    });
+}
+
+function viewAllRoles() {
+    db.query('SELECT * FROM role', (err, result) => {
+        if (err) throw err;
+        console.log('Viewing Roles');
+        console.table(result);
+        employeeTracker();
+    });
+}
+
+function viewAllEmployees() {
+    db.query('SELECT * FROM employee', (err, result) => {
+        if (err) throw err;
+        console.log('Viewing Employees');
+        console.table(result);
+        employeeTracker();
+    });
+}
+
+
+    
