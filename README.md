@@ -40,8 +40,8 @@ by typing $node index.js in your terminal. You can choose from the below options
 ##Screenshot
 
 <img
-  src="assets\SVGGEN.png"
-  alt="SVG-GEN"
+  src="assets\employeeTracker.png"
+  alt="Employee-Tracker"
   style="display: left; margin: 0 auto; max-width: 500px">
 
 ## Contributing
